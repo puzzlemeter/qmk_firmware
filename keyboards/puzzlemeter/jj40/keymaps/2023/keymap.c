@@ -15,7 +15,7 @@ enum custom_keycodes { QWERTY = SAFE_RANGE, CALC };
 #define RAISE   MO(_RAISE)
 #define ADJUST  MO(_ADJUST)
 #define CALC    MO(_CALC)
-#define JP_UNDS S(KC_RO) // _
+#define JP_UNDS S(KC_MINS) // _
 
 enum {
   TT_LINE,
@@ -30,7 +30,7 @@ enum {
 };
 
 /* tap dance time */
-void tdemail(qk_tap_dance_state_t *state, void *user_data) {
+void tdemail(tap_dance_state_t *state, void *user_data) {
   if (state->count >= 2) {
     SEND_STRING("${CKEY4}");
   } else {
@@ -38,7 +38,7 @@ void tdemail(qk_tap_dance_state_t *state, void *user_data) {
   }
   reset_tap_dance (state);
 }
-void tdomain(qk_tap_dance_state_t *state, void *user_data) {
+void tdomain(tap_dance_state_t *state, void *user_data) {
   if (state->count >= 2) {
     SEND_STRING("${CKEY2}");
   } else {
@@ -46,7 +46,7 @@ void tdomain(qk_tap_dance_state_t *state, void *user_data) {
   }
   reset_tap_dance (state);
 }
-void tdarr(qk_tap_dance_state_t *state, void *user_data) {
+void tdarr(tap_dance_state_t *state, void *user_data) {
   if (state->count >= 2) {
     SEND_STRING("->");
   } else {
@@ -54,16 +54,16 @@ void tdarr(qk_tap_dance_state_t *state, void *user_data) {
   }
   reset_tap_dance (state);
 }
-void tdime(qk_tap_dance_state_t *state, void *user_data) {
+void tdime(tap_dance_state_t *state, void *user_data) {
   if (state->count >= 2) {
-    tap_code(KC_LANG1);
+    tap_code(KC_LNG1);
   } else {
-    tap_code(KC_LANG2);
+    tap_code(KC_LNG2);
   }
   reset_tap_dance (state);
 }
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
   [TT_JLINE] = ACTION_TAP_DANCE_DOUBLE(JP_UNDS, KC_MINS),
   [TT_LINE]  = ACTION_TAP_DANCE_DOUBLE(KC_UNDS, KC_MINS),
   [TT_QUO]   = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_DQUO),
@@ -162,7 +162,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] = LAYOUT_ortho_4x12( \
     KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,      KC_F7,   QWERTY,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  \
-    _______, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, BL_TOGG,    BL_BRTG, BL_INC,  BL_DEC, RGB_M_SW,RGB_M_X, _______, \
+    _______, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, BL_TOGG,    BL_BRTG, BL_ON,  BL_STEP, RGB_M_SW,RGB_M_X, _______, \
     _______,    CALC, RGB_HUD, RGB_SAD, RGB_VAD,  _______,    _______, TD(TD_DOMAIN), RGB_M_R, _______, KC_PSCR, _______, \
     _______, _______, RGB_MOD, _______, _______, _______,    _______, _______, _______, _______, _______, _______ \
 )
@@ -170,7 +170,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 void keyboard_post_init_user(void) {
     rgblight_enable();
-    rgblight_mode(RGBLIGHT_MODE_RAINBOW_SWIRL);
+    // ref rgblight.h
+    rgblight_mode(RGBLIGHT_MODE_RAINBOW_MOOD);
     set_single_persistent_default_layer(_QWERTY);
 }
 
@@ -183,7 +184,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case QWERTY:
       rgblight_disable();
       if (is_backlight_enabled()) {
-        breathing_disable();
+        oneshot_disable();
       }
       if (record->event.pressed) {
         set_single_persistent_default_layer(_QWERTY);
