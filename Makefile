@@ -421,10 +421,15 @@ generate-keyboards-file:
 clean:
 	echo -n 'Deleting .build/ ... '
 	rm -rf $(BUILD_DIR)
-	echo 'done.'
+	echo 'clean done.'
 
 .PHONY: distclean
 distclean: clean
 	echo -n 'Deleting *.bin, *.hex, and *.uf2 ... '
 	rm -f *.bin *.hex *.uf2
 	echo 'done.'
+
+.PHONY:
+replace:
+	set -a && source local.env && set +a && envsubst < ./keyboards/puzzlemeter/chidori/keymaps/2023/keymap.c.in > ./keyboards/puzzlemeter/chidori/keymaps/2023/keymap.c
+	set -a && source local.env && set +a && envsubst < ./keyboards/puzzlemeter/hifumi/keymaps/default/keymap.c.in > ./keyboards/puzzlemeter/hifumi/keymaps/default/keymap.c

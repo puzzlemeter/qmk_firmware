@@ -41,9 +41,9 @@ enum {
 /* tap dance time */
 void tdemail(qk_tap_dance_state_t *state, void *user_data) {
   if (state->count >= 2) {
-    SEND_STRING("CKEY4");
+    SEND_STRING("${CKEY4}");
   } else {
-    SEND_STRING("CKEY5");
+    SEND_STRING("${CKEY5}");
   }
   reset_tap_dance (state);
 }
