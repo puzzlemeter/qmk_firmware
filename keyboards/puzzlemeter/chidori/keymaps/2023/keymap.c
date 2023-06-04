@@ -37,23 +37,23 @@ enum {
 };
 
 /* tap dance time */
-void tdemail(qk_tap_dance_state_t *state, void *user_data) {
+void tdemail(tap_dance_state_t *state, void *user_data) {
   if (state->count >= 2) {
-    SEND_STRING("CKEY4");
+    SEND_STRING("${CKEY4}");
   } else {
-    SEND_STRING("CKEY5");
+    SEND_STRING("${CKEY5}");
   }
   reset_tap_dance (state);
 }
-void tdomain(qk_tap_dance_state_t *state, void *user_data) {
+void tdomain(tap_dance_state_t *state, void *user_data) {
   if (state->count >= 2) {
-    SEND_STRING("CKEY2");
+    SEND_STRING("${CKEY2}");
   } else {
-    SEND_STRING("CKEY1");
+    SEND_STRING("${CKEY1}");
   }
   reset_tap_dance (state);
 }
-void tdarr(qk_tap_dance_state_t *state, void *user_data) {
+void tdarr(tap_dance_state_t *state, void *user_data) {
   if (state->count >= 2) {
     SEND_STRING("->");
   } else {
@@ -61,16 +61,16 @@ void tdarr(qk_tap_dance_state_t *state, void *user_data) {
   }
   reset_tap_dance (state);
 }
-void tdime(qk_tap_dance_state_t *state, void *user_data) {
+void tdime(tap_dance_state_t *state, void *user_data) {
   if (state->count >= 2) {
-    tap_code(KC_LANG1);
+    tap_code(KC_LNG1);
   } else {
-    tap_code(KC_LANG2);
+    tap_code(KC_LNG2);
   }
   reset_tap_dance (state);
 }
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
   [TT_LINE]  = ACTION_TAP_DANCE_DOUBLE(KC_UNDS, KC_MINS),
   [TT_CLN]   = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLON),
   [TT_QUO]   = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_DQUO),
@@ -147,8 +147,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `-----------------------------------------'             `-----------------------------------------'
    */
     [_ADJUST] = LAYOUT(
-      _______, QK_BOOT,   _______, _______, _______, _______,           _______, QWERTY,  KC_LANG1, KC_LANG2,  _______, KC_INS,
-      KC_CAPS, _______, _______, _______, _______, AG_NORM,           AG_SWAP, KC_MINS, KC_EQL,  KC_PSCR, KC_SLCK, KC_PAUS,
+      _______, QK_BOOT,   _______, _______, _______, _______,           _______, QWERTY,  KC_LNG1, KC_LNG2,  _______, KC_INS,
+      KC_CAPS, _______, _______, _______, _______, AG_NORM,           AG_SWAP, KC_MINS, KC_EQL,  KC_PSCR, KC_SCRL, KC_PAUS,
       _______, _______, _______, _______, _______, _______,           _______, TD(TD_DOMAIN), _______, _______, _______, _______,
       _______, _______, _______, _______, _______, _______,           _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
     )

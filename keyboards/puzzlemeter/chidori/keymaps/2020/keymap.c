@@ -94,8 +94,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `-----------------------------------------'             `-----------------------------------------'
    */
     [_ADJUST] = LAYOUT(
-      _______, RESET,   _______, _______, _______, _______,           _______, QWERTY,  KC_LANG1, KC_LANG2,  _______, KC_INS,
-      KC_CAPS, _______, _______, _______, _______, AG_NORM,           AG_SWAP, KC_MINS, KC_EQL,  KC_PSCR, KC_SLCK, KC_PAUS,
+      _______, RESET,   _______, _______, _______, _______,           _______, QWERTY,  KC_LNG1, KC_LNG2,  _______, KC_INS,
+      KC_CAPS, _______, _______, _______, _______, AG_NORM,           AG_SWAP, KC_MINS, KC_EQL,  KC_PSCR, KC_SCRL, KC_PAUS,
       _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______,
       _______, _______, _______, _______, _______, _______,           _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
     )
