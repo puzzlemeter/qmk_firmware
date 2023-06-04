@@ -6,18 +6,19 @@ Check the process in Makefile `replace:`
 
 ### jj40
 
-To simply build the firmware file: `make replace && make clean && make puzzlemeter/jj40:2023`
-
+<!-- To simply build the firmware file: `make replace && make clean && make puzzlemeter/jj40:2023` -->
 <!-- To build and immediately flash: `make clean && make puzzlemeter/jj40:2023:flash` -->
+
+`make keyball39`
 
 ### chidori
 
-To simply build the firmware file: `make replace && make clean && make puzzlemeter/chidori:2023`
+`make chidori`
 
 ### hifumi
 
-To simply build the firmware file: `make replace && make clean && make puzzlemeter/hifumi:2023`
+`make hifumi`
 
 ### keyball39
 
-To simply build the firmware file: `make replace && make clean && make keyball/keyball39:puzzlemeter`
+`make jj40`

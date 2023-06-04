@@ -70,7 +70,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [DEFAULT] = LAYOUT(
-        LT(RAISE, KC_LANG1), KC_MS_U,   LT(LOWER, KC_LANG2),
+        LT(RAISE, KC_LNG1), KC_MS_U,   LT(LOWER, KC_LNG2),
         KC_MS_L, KC_MS_D, KC_MS_R
     ),
     [RAISE] = LAYOUT(
