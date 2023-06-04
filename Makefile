@@ -431,5 +431,8 @@ distclean: clean
 
 .PHONY:
 replace:
-	set -a && source local.env && set +a && envsubst < ./keyboards/puzzlemeter/chidori/keymaps/2023/keymap.c.in > ./keyboards/puzzlemeter/chidori/keymaps/2023/keymap.c
-	set -a && source local.env && set +a && envsubst < ./keyboards/puzzlemeter/hifumi/keymaps/default/keymap.c.in > ./keyboards/puzzlemeter/hifumi/keymaps/default/keymap.c
+	set -a && source local.env && set +a && envsubst < ./keyboards/keyball/keyball39/keymaps/puzzlemeter/keymap.c.in > ./keyboards/keyball/keyball39/keymaps/puzzlemeter/keymap.c
+#	set -a && source local.env && set +a && envsubst < ./keyboards/puzzlemeter/chidori/keymaps/2023/keymap.c.in > ./keyboards/puzzlemeter/chidori/keymaps/2023/keymap.c
+#	set -a && source local.env && set +a && envsubst < ./keyboards/puzzlemeter/hifumi/keymaps/default/keymap.c.in > ./keyboards/puzzlemeter/hifumi/keymaps/default/keymap.c
+#	set -a && source local.env && set +a && envsubst < ./keyboards/puzzlemeter/jj40/keymaps/2023/keymap.c.in > ./keyboards/puzzlemeter/jj40/keymaps/2023/keymap.c
+
