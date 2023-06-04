@@ -36,7 +36,7 @@ enum {
   TD_DOMAIN,
 };
 
-/* tap dance time */
+/* tap dance */
 void tdemail(tap_dance_state_t *state, void *user_data) {
   if (state->count >= 2) {
     SEND_STRING("${CKEY4}");
