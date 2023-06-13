@@ -19,24 +19,25 @@
 
 enum layer_number { _QWERTY = 0, _LOWER, _RAISE, _ADJUST };
 
-// Defines the keycodes used by our macros in process_record_user
-enum custom_keycodes { QWERTY = SAFE_RANGE };
-
-#define LOWER  MO(_LOWER)
-#define RAISE  MO(_RAISE)
-#define ADJUST MO(_ADJUST)
+enum custom_keycodes {
+  QWERTY = SAFE_RANGE,
+  VSCMD,
+  TEST_ACT,
+  FULL_NAME,
+  NEW_SAFE_RANGE
+};
 
 enum {
-  TT_LINE,
   TT_CLN,
   TT_QUO,
+  TT_LINE,
   TD_EMAIL,
   TD_ARR,
   TD_IME,
   TD_DOMAIN,
 };
 
-/* tap dance time */
+/* tap dance */
 void tdemail(tap_dance_state_t *state, void *user_data) {
   if (state->count >= 2) {
     SEND_STRING("${CKEY4}");
@@ -70,90 +71,6 @@ void tdime(tap_dance_state_t *state, void *user_data) {
   reset_tap_dance (state);
 }
 
-tap_dance_action_t tap_dance_actions[] = {
-  [TT_LINE]  = ACTION_TAP_DANCE_DOUBLE(KC_UNDS, KC_MINS),
-  [TT_CLN]   = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLON),
-  [TT_QUO]   = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_DQUO),
-  [TD_EMAIL] = ACTION_TAP_DANCE_FN(tdemail),
-  [TD_ARR]   = ACTION_TAP_DANCE_FN(tdarr),
-  [TD_IME]   = ACTION_TAP_DANCE_FN(tdime),
-  [TD_DOMAIN] = ACTION_TAP_DANCE_FN(tdomain),
-};
-
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  /* Qwerty
-   * ,-----------------------------------------.             ,-----------------------------------------.
-   * | Esc  |   Q  |   W  |   E  |   R  |   T  |             |   Y  |   U  |   I  |   O  |   P  | Bksp |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | Ctrl |   A  |   S  |   D  |   F  |   G  |             |   H  |   J  |   K  |   L  |  ;:  |Enter |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | Shift|   Z  |   X  |   C  |   V  |   B  |             |   N  |   M  |  ,<  |  .>  |  Up  |  /   |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | GUI  | Opt  | Tab  |Eisu  |LOWER |Space |             | Space| RAISE|  -_  | Left | Down | Right|
-   * `-----------------------------------------'             `-----------------------------------------'
-   */
-    [_QWERTY] = LAYOUT(
-      KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                    KC_H,    KC_J,    KC_K,    KC_L,    TD(TT_CLN), KC_ENT,
-      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_UP, KC_SLSH,
-      KC_LGUI,  KC_LALT,  KC_TAB, TD(TD_IME), LOWER,   KC_SPC,            KC_SPC,  RAISE,   TD(TT_LINE), KC_LEFT, KC_DOWN,   KC_RGHT
-    ),
-
-  /* Lower
-   * ,-----------------------------------------.             ,-----------------------------------------.
-   * |   ~  |   !  |   @  |   #  |   $  |   %  |             |   ^  |   &  |   *  |   (  |   )  | Bksp |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | CTRL |  F1  |  F2  |  F3  |  F4  |  F5  |             |  F6  |  +   |   =  |   {  |   }  |Enter |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | SHIFT|  F7  |  F8  |  F9  |  F10 |  F11 |             |  F12 |  |   |   '  |  "   |  ;   | PgUp |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | CMD  | Opt   | ESC |email |      |      |             |      |      |  _   | LEFT | RIGHT| PgDn |
-   * `-----------------------------------------'             `-----------------------------------------'
-   */
-    [_LOWER] = LAYOUT(
-      KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,           KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
-      KC_LCTL,   KC_F1,  KC_F2,    KC_F3,  KC_F4,    KC_F5,           KC_F6, KC_PLUS, KC_EQL, KC_LCBR, KC_RCBR, KC_ENT,
-      KC_LSFT,   KC_F7,  KC_F8,    KC_F9,  KC_F10,   KC_F11,          KC_F12, KC_PIPE, KC_QUOT, KC_DQUO, TD(TT_QUO), KC_PGUP,
-      KC_LGUI, KC_LALT, KC_ESC, TD(TD_EMAIL), _______, _______,           _______, _______, KC_UNDS, KC_LEFT, KC_RIGHT, KC_PGDN
-    ),
-
-  /* Raise
-   * ,-----------------------------------------.             ,-----------------------------------------.
-   * |   `  |   1  |   2  |   3  |   4  |   5  |             |   6  |   7  |   8  |   9  |   0  | Bksp |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |             |  F6  |   -  |   =  |   [  |   ]  |Enter |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |SHIFT |  F7  |  F8  |  F9  |  F10 |  F11 |             |  F12 |  =>  |   '  |  "   |  :   |   \  |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | CMD  | Opt  |      |      |      |      |             |      |      | Next | Vol- | Vol+ | Play |
-   * `-----------------------------------------'             `-----------------------------------------'
-   */
-    [_RAISE] = LAYOUT(
-      KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,              KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-      KC_DEL, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,             KC_F6,   KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_ENT,
-      KC_LSFT, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,            KC_F12,  TD(TD_ARR), KC_QUOT,  KC_DQUO, KC_COLON, KC_BSLS,
-      KC_LGUI, KC_LALT, _______, _______, _______, _______,           _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
-    ),
-
-  /* Adjust (Lower + Raise)
-   * ,-----------------------------------------.             ,-----------------------------------------.
-   * |      | Reset|      |      |      |      |             |      |Qwerty| KANA | Eisu |      | Ins  |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | Caps |      |      |      |      | Mac  |             | Win  |  -   |   =  |Print |ScLock|Pause |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |      |      |      |      |      |             |      |domain|      |      |      |      |
-   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |      |      |      |      |      |             |      |      | Home |PageDn|PageUp| End  |
-   * `-----------------------------------------'             `-----------------------------------------'
-   */
-    [_ADJUST] = LAYOUT(
-      _______, QK_BOOT,   _______, _______, _______, _______,           _______, QWERTY,  KC_LNG1, KC_LNG2,  _______, KC_INS,
-      KC_CAPS, _______, _______, _______, _______, AG_NORM,           AG_SWAP, KC_MINS, KC_EQL,  KC_PSCR, KC_SCRL, KC_PAUS,
-      _______, _______, _______, _______, _______, _______,           _______, TD(TD_DOMAIN), _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______,           _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
-    )
-};
-
 void keyboard_post_init_user(void) {
     set_single_persistent_default_layer(_QWERTY);
 }
@@ -169,6 +86,109 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_single_persistent_default_layer(_QWERTY);
             }
             break;
+        case VSCMD:
+          if (record->event.pressed) {
+            SEND_STRING(SS_LGUI(SS_LSFT("p")));
+          }
+          break;
+        case TEST_ACT:
+            if (record->event.pressed) {
+                SEND_STRING("${CKEY3}");
+            }
+            return false;
+        case FULL_NAME:
+            if (record->event.pressed) {
+                SEND_STRING("${CKEY6}");
+            }
+            return false;
     }
     return true;
 }
+
+tap_dance_action_t tap_dance_actions[] = {
+  [TT_LINE]  = ACTION_TAP_DANCE_DOUBLE(KC_MINS, S(KC_MINS)),
+  [TT_CLN]   = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLON),
+  [TT_QUO]   = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_DQUO),
+  [TD_EMAIL] = ACTION_TAP_DANCE_FN(tdemail),
+  [TD_ARR]   = ACTION_TAP_DANCE_FN(tdarr),
+  [TD_IME]   = ACTION_TAP_DANCE_FN(tdime),
+  [TD_DOMAIN] = ACTION_TAP_DANCE_FN(tdomain),
+};
+
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+  /* Qwerty
+   * ,-----------------------------------------.             ,-----------------------------------------.
+   * | Esc  |   Q  |   W  |   E  |   R  |   T  |             |   Y  |   U  |   I  |   O  |   P  | Bksp |
+   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
+   * | Ctrl |   A  |   S  |   D  |   F  |   G  |             |   H  |   J  |   K  |   L  |  ;:  |Enter |
+   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
+   * | Shift|   Z  |   X  |   C  |   V  |   B  |             |   N  |   M  |  ,<  |  .>  |  /?  |  -_  |
+   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
+   * | CMD  | Opt  | Ctrl |Shift |LOWER |ADJUST|             | Bksp | RAISE| Left | Down |  Up  | Right|
+   * |      |      |      | Esc  | Tab  | Space|             |      | Enter|      |      |      |      |
+   * `-----------------------------------------'             `-----------------------------------------'
+   */
+    [_QWERTY] = LAYOUT(
+      KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                       KC_Y,    KC_U,        KC_I,      KC_O, RSFT_T(KC_P), KC_BSPC,
+      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                       KC_H,    KC_J,        KC_K,      KC_L,   TD(TT_CLN),  KC_ENT,
+      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                       KC_N,    KC_M,        KC_COMM,   KC_DOT,   KC_SLSH,  TD(TT_LINE),
+      KC_LGUI, KC_LALT,  KC_LCTL, LSFT_T(KC_ESC),LT(1,KC_TAB),LT(3,KC_SPC),    KC_BSPC, LT(2,KC_ENT),KC_LEFT,  KC_DOWN,     KC_UP,  KC_RIGHT
+    ),
+
+  /* Lower
+   * ,-----------------------------------------.             ,-----------------------------------------.
+   * | Esc  |   !  |   @  |   #  |   $  |   %  |             |   ^  |   &  |   *  |   (  |   )  | Bksp |
+   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
+   * | Ctrl |  F1  |  F2  |  F3  |  F4  |  F5  |             |  -   |  +   |   =  |   {  |   }  |Enter |
+   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
+   * | Shift|  F7  |  F8  |  F9  |  F10 |  F11 |             |  F12 |  |   |  F6  |  "'  |Shift | Tab  |
+   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
+   * | CMD  | Opt  | Ctrl |Shift |LOWER |ADJUST|             |  TO  |  TO  | Left | Down |  Up  | Right|
+   * |      |      |      | Esc  | Tab  | Space|             |RAISE |QWETY |      |      |      |      |
+   * `-----------------------------------------'             `-----------------------------------------'
+   */
+    [_LOWER] = LAYOUT(
+      _______, S(KC_1), S(KC_2), S(KC_3), S(KC_4), S(KC_5),           S(KC_6), S(KC_7), S(KC_8),    S(KC_9),     S(KC_0), KC_BSPC,
+      _______,   KC_F1,  KC_F2,    KC_F3,  KC_F4,    KC_F5,          KC_MINS,S(KC_EQL),  KC_EQL,  S(KC_LBRC), S(KC_RBRC),  KC_ENT,
+      _______,   KC_F6,  KC_F7,    KC_F8,  KC_F9,   KC_F10,          KC_F12, S(KC_BSLS),  KC_F6,  TD(TT_QUO),   KC_RSFT,  KC_TAB,
+      _______, _______, _______, _______, _______, _______,          TO(2),      TO(0), _______,     _______,   _______, _______
+    ),
+
+  /* Raise
+   * ,-------------------------------------------.             ,------------------------------------------.
+   * | Esc  |VSCMD |   1  |   2  |   3  |    _   |             |   -  |   [  |  Up  |  ]   |MOUSE1 | Bksp |
+   * |------|------+------+------+------+--------|             |------+------+------+------+-------+------|
+   * | Ctrl | \    |   4  |   5  |   6  |TD_EMAIL|             |   :  | LEFT | Down |  [   |MOUSE2 |Enter |
+   * |------|------+------+------+------+--------|             |------+------+------+------+-------+------|
+   * |Shift | `~   |   7  |   8  |   9  |   0    |             | FULL |  Del | Pgup | Pgup | PgDn  |   \  |
+   * |      |      |      |      |      |        |             | NAME |      |      |      |       |      |
+   * |------|------+------+------+------+--------|             |------+------+------+------+-------+------|
+   * | CMD  | Opt  | Ctrl |Shift |  TD  |  Caps  |             | TO   |RAISE | Left | Down |  Up   |Right |
+   * |      |      |      | Esc  |  IME |  Lock  |             |LOWER |      |      |      |       |      |
+   * `-------------------------------------------'             `------------------------------------------'
+   */
+    [_RAISE] = LAYOUT(
+      _______,   VSCMD,    KC_1,    KC_2,   KC_3,   S(KC_MINS),            KC_MINS, KC_LBRC,     KC_UP,  KC_RBRC, KC_BTN1,   KC_BSPC,
+      _______, KC_BSLS,    KC_4,    KC_5,   KC_6, TD(TD_EMAIL),         S(KC_SCLN), KC_LEFT,   KC_DOWN,  KC_RGHT, KC_BTN2,    KC_ENT,
+      _______,  KC_GRV,    KC_7,    KC_8,   KC_9,         KC_0,          FULL_NAME,  KC_DEL,   KC_PGUP,  KC_PGDN, TD(TD_ARR),KC_BSLS,
+      _______, _______, _______, _______,   TD(TD_IME), KC_CAPS,        TO(1),  _______, _______, _______, _______, _______
+    ),
+
+  /* Adjust (Lower + Raise)
+   * ,-----------------------------------------.             ,-----------------------------------------.
+   * |      | Reset|      |      |      |      |             |      |Qwerty| KANA | Eisu |      | Ins  |
+   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
+   * | Caps |      |      |      |      | Mac  |             | Win  |  -   |   =  |Print |ScLock|Pause |
+   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
+   * |      |      |      |      |      |      |             |      |domain|      |      |      |      |
+   * |------+------+------+------+------+------|             |------+------+------+------+------+------|
+   * |      |      |      |      |      |      |             |      |      | Home |PageDn|PageUp| End  |
+   * `-----------------------------------------'             `-----------------------------------------'
+   */
+    [_ADJUST] = LAYOUT(
+      _______, QK_RBT,   _______, _______, _______, _______,           _______, QWERTY,  KC_LNG1, KC_LNG2,  _______, KC_INS,
+      KC_CAPS, _______, _______, _______, _______, AG_NORM,           AG_SWAP, KC_MINS, KC_EQL,  KC_PSCR, KC_SCRL, KC_PAUS,
+      _______, _______, _______, _______, _______, _______,           _______, TD(TD_DOMAIN), _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______,           _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
+    )
+};
