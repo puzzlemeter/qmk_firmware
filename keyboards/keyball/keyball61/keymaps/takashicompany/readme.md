@@ -23,7 +23,7 @@ make keyball/keyball61:takashicompany:flash
 当ファームウェアはRemapに対応しております。  
 レイヤー数は5となります。
 
-(以下の画像はKeyball44のものです)
+(以下の画像はKeyball44のものです。)  
 <img src="https://user-images.githubusercontent.com/4215759/193408416-3cded42f-4e86-4b70-ae23-8dc8f72fb64c.png" width="600px"/>
 
 |キー|Code(hex)|説明|
