@@ -451,5 +451,5 @@ hifumi:
 jj40:
 	set -a && source local.env && set +a && envsubst < ./keyboards/puzzlemeter/jj40/keymaps/2023/keymap.c.in > ./keyboards/puzzlemeter/jj40/keymaps/2023/keymap.c
 	make clean
-	make puzzlemeter/jj40:default
+	make puzzlemeter/jj40:2023
 
