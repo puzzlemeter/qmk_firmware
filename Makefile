@@ -91,6 +91,10 @@ distclean: clean
 	rm -f *.bin *.hex *.uf2
 	echo 'done.'
 
+.PHONY:
+minizone:
+	set -a && source local.env && set +a && envsubst < ./keyboards/keyball/keyball39/keymaps/takashicompany/keymap.c.in > ./keyboards/keyball/keyball39/keymaps/takashicompany/keymap.c
+	make clean && make keyball/keyball39:takashicompany
 
 .DEFAULT_GOAL := all:all
 
