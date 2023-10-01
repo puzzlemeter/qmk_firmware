@@ -421,10 +421,35 @@ generate-keyboards-file:
 clean:
 	echo -n 'Deleting .build/ ... '
 	rm -rf $(BUILD_DIR)
-	echo 'done.'
+	echo 'clean done.'
 
 .PHONY: distclean
 distclean: clean
 	echo -n 'Deleting *.bin, *.hex, and *.uf2 ... '
 	rm -f *.bin *.hex *.uf2
 	echo 'done.'
+
+.PHONY:
+keyball39:
+	set -a && source local.env && set +a && envsubst < ./keyboards/keyball/keyball39/keymaps/puzzlemeter/keymap.c.in > ./keyboards/keyball/keyball39/keymaps/puzzlemeter/keymap.c
+	make clean
+	make keyball/keyball39:puzzlemeter
+
+.PHONY:
+chidori:
+	set -a && source local.env && set +a && envsubst < ./keyboards/puzzlemeter/chidori/keymaps/2023/keymap.c.in > ./keyboards/puzzlemeter/chidori/keymaps/2023/keymap.c
+	make clean
+	make puzzlemeter/chidori:2023
+
+.PHONY:
+hifumi:
+	set -a && source local.env && set +a && envsubst < ./keyboards/puzzlemeter/hifumi/keymaps/default/keymap.c.in > ./keyboards/puzzlemeter/hifumi/keymaps/default/keymap.c
+	make clean
+	make puzzlemeter/hifumi:default
+
+.PHONY:
+jj40:
+	set -a && source local.env && set +a && envsubst < ./keyboards/puzzlemeter/jj40/keymaps/2023/keymap.c.in > ./keyboards/puzzlemeter/jj40/keymaps/2023/keymap.c
+	make clean
+	make puzzlemeter/jj40:2023
+
