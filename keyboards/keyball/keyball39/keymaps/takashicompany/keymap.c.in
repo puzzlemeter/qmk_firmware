@@ -29,10 +29,7 @@ enum custom_keycodes {
     KC_MY_BTN3,
     KC_MY_SCR,
     KC_TO_CLICKABLE_INC,
-    KC_TO_CLICKABLE_DEC,
-    MACRO1,
-    MACRO2,
-    MACRO3
+    KC_TO_CLICKABLE_DEC
 };
 
 
@@ -183,24 +180,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // }
 
                 eeconfig_update_user(user_config.raw);
-            }
-            return false;
-        case MACRO1:
-            if (record->event.pressed) {
-                SEND_STRING("${CKEY1}");
-            } else {
-            }
-            return false;
-        case MACRO2:
-            if (record->event.pressed) {
-                SEND_STRING("${CKEY6}");
-            } else {
-            }
-            return false;
-        case MACRO3:
-            if (record->event.pressed) {
-                SEND_STRING("${CKEY2}");
-            } else {
             }
             return false;
          default:
@@ -389,8 +368,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   LAYOUT_universal(
     _______  , _______  , _______  , _______  , _______,                              _______  , _______  , _______  , _______  , _______  ,
-    MACRO1  , MACRO3, KC_MY_BTN2, KC_MY_SCR, KC_MY_BTN1,                              _______  ,KC_MY_BTN1, KC_MY_SCR, KC_MY_BTN2  , _______  ,
-    _______  , _______  , _______  , _______  , MACRO2,                              _______  , _______  , _______  , _______  , _______  ,
+    _______  , _______, KC_MY_BTN2, KC_MY_SCR, KC_MY_BTN1,                              _______  ,KC_MY_BTN1, KC_MY_SCR, KC_MY_BTN2  , _______  ,
+    _______  , _______  , _______  , _______  , _______,                              _______  , _______  , _______  , _______  , _______  ,
     _______  , _______  , _______  , _______  , _______  , _______  ,      _______ ,  _______  , _______  , _______  , _______  , _______
   )
 };
