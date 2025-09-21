@@ -1,0 +1,9 @@
+#ifndef CONFIG_USER_H
+#define CONFIG_USER_H
+
+#define PREVENT_STUCK_MODIFIERS
+#define TAPPING_TERM 200
+#define TAPPING_TOGGLE 2
+#define TAPPING_TERM_PER_KEY
+
+#endif
